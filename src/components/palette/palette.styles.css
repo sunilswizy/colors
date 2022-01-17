@@ -1,0 +1,11 @@
+.Palette {
+	height: 100vh;
+	width: 100%;
+	overflow: hidden;
+}
+
+.Palette-colors {
+	height: 90%;
+	/* display: grid;
+	grid-template-columns: repeat(5, 1fr); */
+}

@@ -1,0 +1,66 @@
+.color-box {
+	width: 20%;
+	height: 25%;
+	display: inline-block;
+	cursor: pointer;
+	margin: 0 auto;
+	position: relative;
+	text-transform: uppercase;
+	margin-bottom: -4px;
+}
+
+.copy-container {
+	/* height: 100%;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: flex-end; */
+}
+
+.box-content {
+	position: absolute;
+	color: #000;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	padding: 10px;
+	letter-spacing: 1px;
+	font-size: 12px;
+}
+
+.see-more {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding: 10px;
+	font-size: 12px;
+	background: rgba(255, 255, 255, 0.3);
+	color: #fff;
+	width: 60px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+}
+
+.copy-button {
+	width: 100px;
+	height: 30px;
+	position: absolute;
+	display: inline-block;
+	top: 50%;
+	left: 50%;
+	margin-left: -50px;
+	margin-top: -15px;
+	text-align: center;
+	outline: none;
+	background: rgba(255, 255, 255, 0.3);
+	font-size: 1rem;
+	line-height: 20px;
+	color: #fff;
+	border: none;
+	opacity: 0;
+}
+
+.color-box:hover .copy-button {
+	opacity: 1;
+	transition: 0.5s;
+}
