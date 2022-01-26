@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import "./colorbox.styles.css";
-
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { Link } from "react-router-dom";
 
-const ColorBox = ({ background, name }) => {
+import styles from "../styles/colorbox.styles";
+import { withStyles } from "@material-ui/styles";
+
+const ColorBox = ({ background, name, id, paletteId, noMore, classes }) => {
 	const [isCopied, setIsCopied] = useState(false);
+
 	const changeCopyState = () => {
 		setIsCopied(true);
 		setTimeout(() => {
@@ -14,27 +17,38 @@ const ColorBox = ({ background, name }) => {
 
 	return (
 		<CopyToClipboard text={background} onCopy={changeCopyState}>
-			<div className='color-box' style={{ background }}>
+			<div
+				className={`${classes.root} ${classes.singleBox}`}
+				style={{ background }}>
 				<div
-					className={`copy-overley ${isCopied && "show"}`}
+					className={`${classes.copyOverley} ${
+						isCopied && classes.copyOverlayShow
+					}`}
 					style={{ background }}
 				/>
 
-				<div className={`copy-msg  ${isCopied && "show"}`}>
-					<h1>Copied!</h1>
-					<p>{background}</p>
+				<div
+					className={`${classes.copyMsg} ${isCopied && classes.copyMsgShow}`}>
+					<h1 className={classes.copyText}>Copied!</h1>
+					<p className={classes.copyText}>{background}</p>
 				</div>
 
-				<div className='copy-container'>
-					<div className='box-content'>
-						<span>{name}</span>
+				<div>
+					<div className={classes.boxContent}>
+						<span className={classes.colorName}>{name}</span>
 					</div>
-					<button className='copy-button'>COPY</button>
-					<span className='see-more'>MORE</span>
+					<button className={classes.copyButton}>COPY</button>
+					{!noMore && (
+						<Link
+							to={`/palette/${paletteId}/${id}`}
+							onClick={e => e.stopPropagation()}>
+							<span className={classes.seeMore}>MORE</span>
+						</Link>
+					)}
 				</div>
 			</div>
 		</CopyToClipboard>
 	);
 };
 
-export default ColorBox;
+export default withStyles(styles)(ColorBox);

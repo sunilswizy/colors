@@ -1,34 +1,58 @@
-import React from "react";
-import "./palette.styles.css";
+import React, { useState } from "react";
 import ColorBox from "../Colorbox/colorbox.component";
 import Navbar from "../Navbar/navbar.component";
 
-class Palette extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			level: 500,
-		};
-	}
+import { useParams } from "react-router-dom";
 
-	handleChange = level => {
-		this.setState({ level });
+import { generatePalette } from "../Seed-colors/colorhelper";
+import Footer from "../footer/footer.componet";
+
+import { withStyles } from "@material-ui/styles";
+import styles from "../styles/palette.styles";
+
+const Palette = ({ classes, newPalette }) => {
+	const [level, setLevel] = useState(500);
+	const [colorCode, setColorCode] = useState("hex");
+	const { id } = useParams();
+
+	const findPalette = id1 => {
+		return newPalette.find(el => {
+			return el.id === id1;
+		});
 	};
 
-	render() {
-		const { palette } = this.props;
-		const { level } = this.state;
-		return (
-			<div className='Palette'>
-				<Navbar level={level} handleChange={this.handleChange} />
-				<div className='Palette-colors'>
-					{palette.colors[level].map(({ hex, id, ...other }) => {
-						return <ColorBox background={hex} key={id} {...other} />;
-					})}
-				</div>
-			</div>
-		);
-	}
-}
+	const handleChange = level => {
+		setLevel(level);
+	};
 
-export default Palette;
+	const handleColor = colorCode => {
+		setColorCode(colorCode);
+	};
+
+	const palette = generatePalette(findPalette(id));
+
+	return (
+		<div className={classes.root}>
+			<Navbar
+				level={level}
+				handleChange={handleChange}
+				handleColor={handleColor}
+			/>
+			<div className={classes.PaletteColors}>
+				{palette.colors[level].map(color => {
+					return (
+						<ColorBox
+							background={color[colorCode]}
+							key={color.id}
+							paletteId={id}
+							{...color}
+						/>
+					);
+				})}
+			</div>
+			<Footer paletteName={palette.paletteName} emoji={palette.emoji} />
+		</div>
+	);
+};
+
+export default withStyles(styles)(Palette);
